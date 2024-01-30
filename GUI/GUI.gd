@@ -6,6 +6,8 @@ onready var viewport = $Viewport
 onready var global_scheme = preload("res://BackgroundGenerator/Colorscheme.tres")
 
 var new_size = Vector2(200,200)
+var seedNum1 = 1
+var seedNum2 = 1
 
 func _ready():
 	randomize()
@@ -33,6 +35,7 @@ func _generate_new():
 
 func _on_NewButton_pressed():
 	_generate_new()
+	generator.generate_random_new()
 
 func _on_ExportButton_pressed():
 	$Viewport/Camera1.current = false
@@ -94,3 +97,17 @@ func _on_PixelsWidth_value_changed(value):
 
 func _on_EnableTransparency_pressed():
 	generator.toggle_transparancy()
+
+
+func _on_Range1_value_changed(value):
+	value = clamp(value, 1, 10)
+	seedNum1 = float(value)
+	_generate_new()
+	generator.generate_from_range(seedNum1, seedNum2)
+
+
+func _on_Range2_value_changed(value):
+	value = clamp(value, 1, 10)
+	seedNum2 = float(value)
+	_generate_new()
+	generator.generate_from_range(seedNum1, seedNum2)

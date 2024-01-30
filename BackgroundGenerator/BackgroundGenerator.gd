@@ -36,8 +36,14 @@ func toggle_reduce_background():
 	starstuff.material.set_shader_param("reduce_background", reduce_background)
 	nebulae.material.set_shader_param("reduce_background", reduce_background)
 
-func generate_new():
-	starstuff.material.set_shader_param("seed", rand_range(1.0, 10.0))
+func generate_random_new():
+	generate_new(rand_range(1.0, 10.0), rand_range(1.0, 10.0))
+
+func generate_from_range(value1, value2):
+	generate_new(value1, value2);
+
+func generate_new(seedNum1, seedNum2):
+	starstuff.material.set_shader_param("seed", seedNum1)
 	starstuff.material.set_shader_param("pixels", max(rect_size.x, rect_size.y))
 	
 	var aspect = Vector2(1,1)
@@ -47,7 +53,7 @@ func generate_new():
 		aspect = Vector2(1.0, rect_size.y / rect_size.x)
 	
 	starstuff.material.set_shader_param("uv_correct", aspect)
-	nebulae.material.set_shader_param("seed", rand_range(1.0, 10.0))
+	nebulae.material.set_shader_param("seed", seedNum2)
 	nebulae.material.set_shader_param("pixels", max(rect_size.x, rect_size.y))
 	nebulae.material.set_shader_param("uv_correct", aspect)
 	
@@ -56,6 +62,7 @@ func generate_new():
 	particles.position = rect_size * 0.5
 	particles.process_material.set_shader_param("emission_box_extents", Vector3(rect_size.x * 0.5, rect_size.y*0.5,1.0))
 	
+	#Set Range
 	var p_amount = (rect_size.x * rect_size.y) / 150
 	particles.amount = randi()%(int(p_amount * 0.75)) + int(p_amount * 0.25)
 
@@ -71,6 +78,7 @@ func _make_new_stars():
 	
 	var star_amount = int(max(rect_size.x, rect_size.y) / 20)
 	star_amount = max(star_amount, 1)
+	#Set Range
 	for i in randi()%star_amount:
 		_place_big_star()
 	
@@ -80,6 +88,7 @@ func _make_new_planets():
 	planet_objects = []
 
 	var planet_amount = 5#int(rect_size.x * rect_size.y) / 8000
+	#Set Range
 	for i in randi()%planet_amount:
 		_place_planet()
 
