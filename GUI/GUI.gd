@@ -31,7 +31,7 @@ func _generate_new():
 
 	yield(get_tree(), "idle_frame")
 	$HBoxContainer/Control/TextureRect.rect_size = Vector2(600,600)
-	generator.generate_new()
+	
 
 func _on_NewButton_pressed():
 	_generate_new()
